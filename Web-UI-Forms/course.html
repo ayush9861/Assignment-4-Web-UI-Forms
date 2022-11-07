@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css"/>
+  <script src="script.js"></script>
+</head>
+<body onload="hide()">
+<br/>
+<img src="https://biz.prlog.org/universityguide/logo.png" class="center" width="250" height="100"/>
+<br/>
+<div class="search-box">
+  <input id="search" class="search-bar" type="text" placeholder="Search..."  name="Search" /><br>
+        <button id="submit" class="searchbutton" onclick="testfunction()" >Search</button>
+</div>
+<div id="maindivone">
+  <div class="background" onclick="hide()">
+  </div>
+  <div class="modal" id="div1">
+  <div class="formdiv" >
+    <div class="closebtn">
+  <button id="closebtn" class="closebtn" onclick="hide()"><i class="fas fa-window-close fa-2x"></i>
+  </button>
+    </div>
+<!--  <input id="id" type="hidden" name="courseid" /><br>-->
+  <label for="first">Course Name:</label><br>
+  <input id="first" type="text" name="coursesName" /><br>
+  <label for="second">Course Code:</label><br>
+  <input id="second" type="text" name="coursesCode" /><br>
+  <label for="third">Course Duration:</label><br>
+  <input id="third" type="text" name="coursesDuration" /><br>
+      <button id="submit" class="formbtn" onclick="addcourse()">Submit</button>
+    </div>
+    </div>
+<!-- ////////////////////////// -->
+  <div class="modal" id="div2">
+    <div class="formdiv" >
+      <div class="closebtn">
+        <button id="closebtn1" class="closebtn" onclick="hide1()" ><i class="fas fa-window-close fa-2x"></i>
+        </button>
+      </div>
+
+        <input id="id1" type="hidden" name="courseid" /><br>
+      <label for="first1">Course Name:</label><br>
+      <input id="first1" type="text" name="coursesName" /><br>
+      <label for="second1">Course Code:</label><br>
+      <input id="second1" type="text" name="coursesCode" /><br>
+      <label for="third1">Course Duration:</label><br>
+      <input id="third1" type="text" name="coursesDuration" /><br>
+      <!-- <center> -->
+        <button id="update1" onclick="editdata1()" class="formbtn">Update</button>
+      <!-- </center> -->
+    </div>
+  </div>
+
+<!--  ////////////////////////-->
+
+<table class="table table-striped">
+  <tr  class="bg-info">
+      <th>Course Id</th>
+      <th>Course Name</th>
+      <th>Course Code</th>
+      <th>Course Duration</th>
+      <th>Edit Data</th>
+    <th>Delete Data</th>
+
+  </tr>
+  <tbody id="body">
+  
+  </tbody>
+    <tbody id="tbody">
+  
+  </tbody>
+</table>
+<button style="float: right; margin-right: 20px;" onclick="display();">Add Data</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+  </script>
+
+<script>
+  function addcourse(){
+    var name = $('#first').val();
+    console.log(name);
+    var code = $('#second').val();
+    var duration = $('#third').val();
+    $.ajax({
+      url: "http://localhost:8080/api/courses/add",
+       type: 'POST',
+       data: JSON.stringify({"coursesName": name,"coursesCode":code,"coursesDuration": duration}),
+      contentType: "application/json",
+      dataType: "json",
+      success: function (data){
+        window.location.reload();
+    }}); }
+//
+function testfunction(){
+    var k = $("#search").val();
+      let request = new XMLHttpRequest();
+    request.open("GET", "http://localhost:8080/api/courses/getByName/"+ k,);
+    request.send();
+    request.onload = function() {
+      console.log(request);
+      if (request.status == 200) {
+        var a = JSON.parse(request.response);
+console.log(a);
+
+//////////Creating another Function
+Insertdata(a);
+function Insertdata(data){
+    $("#body").empty();
+var getTable = document.getElementById("body");
+for(i = 0; i <= data.length; i++ ){
+var row =  `<tr>
+            <td id= "tdid1">${data[i].coursesId}</td>
+            <td>${data[i].coursesName}</td>
+            <td>${data[i].coursesCode}</td>
+            <td>${data[i].coursesDuration}</td>
+            <td><button class="edit"   data-id="${data[i].coursesId}" onclick="display1()"  type="button">Edit Data</button></td>
+            <td><button class="delete" data-id="${data[i].coursesId}" onclick="deletec()" type="button">Delete Data</button></td>
+             </tr>`
+
+getTable.innerHTML += row;
+
+}
+
+
+}
+
+
+
+      } else {
+        console.log(`error ${request.status} ${request.statusText}`);
+      }
+
+     loadmydata();
+
+
+};
+}
+
+//end test function
+    function finddata(){
+          var k = $("#search").val();
+          console.log(k)
+         $.ajax({
+      url: "http://localhost:8080/api/courses/getByName/"+ k,
+      type: 'GET',
+      success: function (data){
+        console.log("Something")
+    
+                data.forEach(element => {
+              Insertdata(element)
+                  
+                });
+
+//////////Creating another Function
+                // Insertdata(a);
+                function Insertdata(data){
+                  console.log("Ayush")
+                  console.log(data)
+                    $("#body").empty();
+                    var getTable = document.getElementById("tbody");
+                    for(i = 0; i <= data.length; i++ ){
+            var row =  `<tr>
+            <td id= "tdid1">${data[i].coursesId}</td>
+            <td>${data[i].coursesName}</td>
+            <td>${data[i].coursesCode}</td>
+            <td>${data[i].coursesDuration}</td>
+            <td><button class="edit"   data-id="${data[i].coursesId}" onclick="display1()"  type="button">Edit Data</button></td>
+            <td><button class="delete" data-id="${data[i].coursesId}" onclick="deletec()" type="button">Delete Data</button></td>
+            <td><button class="view" data-id="${data[i].coursesId}" onclick="viewid()" type="button">View Data</button></td>
+            
+          </tr>`
+
+getTable.innerHTML += row;
+
+}
+              }
+
+
+      }})};
+
+      ////
+</script>
+</div>
+<div id="subjectdiv" style="display: none">
+<!--  <div class="background" onclick="subhide()" >-->
+<div>
+  <table class="table table-striped">
+    <tr  class="bg-info">
+      <th>Subject Id</th>
+      <th>Subject Name</th>
+      <th>Subject Code</th>
+      <th>Edit Data</th>
+      <th>Delete Data</th>
+
+    </tr>
+    <tbody id="body1">
+
+    </tbody>
+  </table>
+  <button style="float: right; margin-right: 20px;" onclick="subdisplay()">Add Data</button>
+  <button style="float: right; margin-right: 20px;" onclick="mainmenu()">Main Menu</button>
+
+  <div id="submaindivone" >
+    <br><br>
+    <div class="modal" id="subdiv">
+      <div class="formdiv" >
+        <div class="closebtn">
+          <button id="subclosebtn" class="closebtn" onclick="subhide()"><i class="fas fa-window-close fa-2x"></i>
+          </button>
+        </div>
+
+        <!--  <input id="id" type="hidden" name="courseid" /><br>-->
+        <label for="subsecond">Subject Name:</label><br>
+        <input id="subsecond" type="text" name="subjectName" /><br>
+        <label for="subthird">Subject Code:</label><br>
+        <input id="subthird" type="text" name="subjectCode" /><br>
+        <center><br>
+          <br>
+          <button id="subsubmit" onclick="addsubjects()" >Submit</button>
+        </center>
+      </div>
+    </div>
+    <!-- ////////////////////////// -->
+    <div class="modal" id="subdiv2">
+      <div class="formdiv" >
+        <div class="closebtn">
+          <button id="sbclosebtn" class="closebtn" onclick="subhideupdate()" ><i class="fas fa-window-close fa-2x"></i>
+          </button>
+        </div>
+        <input id="subsecondupdateid" type="hidden" name="subjectId" /><br>
+        <label for="subsecondupdatename">Subject Name:</label><br>
+        <input id="subsecondupdatename" type="text" name="subjectName" /><br>
+        <label for="subthirdupdatecode">Subject Code:</label><br>
+        <input id="subthirdupdatecode" type="text" name="subjectCode" /><br>
+        <center><br>
+          <br>
+          <button id="subsubmitupdate" onclick="subjectsupdate()" >Submit</button>
+        </center>
+      </div>
+    </div>
+        <script>
+//             let request = new XMLHttpRequest();
+//             request.open("GET", "http://localhost:8080/subjects/subjects/bycourseid/" + k);
+//             request.send();
+//             request.onload = function () {
+//               console.log(request);
+//               if (request.status == 200) {
+//                 var a = JSON.parse(request.response);
+//                 console.log(a);
+//
+// //////////Creating another Function
+//                 Insertdata(a);
+//
+//                 function Insertdata(data) {
+//                   var getTable = document.getElementById("body1");
+//                   for (i = 0; i <= data.length; i++) {
+//                     var row = `<tr>
+//             <td>${data[i].subjectId}</td>
+//             <td>${data[i].subjectName}</td>
+//             <td>${data[i].subjectCode}</td>
+//             <td><button class="edit"   data-id="${data[i].subjectId}" onclick="display1()"  type="button">Edit Data</button></td>
+//             <td><button class="delete1" data-id="${data[i].subjectId}" onclick="loaddata1()" type="button">Delete Data</button></td>
+//           </tr>`
+//
+//                     getTable.innerHTML += row;
+//
+//                   }
+//
+//
+//                 }
+//
+//
+//               } else {
+//                 console.log(`error ${request.status} ${request.statusText}`);
+//               }
+//               // loaddata1();
+//
+//
+//             };
+
+          /////////////////Calling Delete Data
+
+          // function loaddata1() {
+          //
+          //   $(".delete1").click(function (e) {
+          //     var a =deletedata1($($(this)[0]).data("id"));
+          //     console.log(a);
+          //     e.preventDefault();
+          //   });
+          //
+          //   $(document).ready()
+          //   {
+          //     loaddata1()
+          //   }
+          //
+          // /////////////////////Deleting Request
+          // function deletedata1(j){
+          //   $.ajax({
+          //     url:'http://localhost:8080/subjects/delete/' + j,
+          //     type: 'DELETE',
+          //     dataType:'json',
+          //     success : function(data){
+          //       window.location.reload();
+          //     },
+          //     error: function (data){window.location.reload();
+          //       console.log("Error");
+          //     }})};
+          // ////////////////
+          //
+          // $(document).ready()
+          // {
+          //   hidediv()
+          // }
+          // function hidediv() {
+          //   $("#subjectdiv").hide();
+          // }
+/////////////////Add Subjects
+
+
+
+        </script>
+
+</div>
+
+</div>
+  </div>
+</div>
+  </div>
+</body>
+</html>
+

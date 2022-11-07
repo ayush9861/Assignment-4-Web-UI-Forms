@@ -1,0 +1,92 @@
+.background{
+
+    width: 100%;
+    left: 0%;
+    right: 0%;
+    top: 0%;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+   background: rgba(0,0,0,0.5);
+  
+  }
+  .modal{
+    width: 500px;
+    height: 450px;
+    background: white;
+    left: 50%;
+    top: 50%;  
+    z-index: 2;
+    position: fixed;
+    margin-left: -250px;
+    margin-top: -250px;
+    border-radius: 10px;
+    box-shadow: 5px 10px 15px #26000a;
+  }
+  .formdiv{
+    width: 100%;
+  margin-top: 30px;
+  margin-left: 40px;
+  
+  }
+  .submit{
+  padding: 10px 20px;
+  background-color: #006eff;
+  color: white;
+  margin-top: 15px;
+  border: none;
+  }
+  
+   input[type=text] {
+ width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  left: 10px;
+  }
+   
+
+
+  .closebtn{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  background-color: white;
+  }
+
+  th{ 
+    color:#fff;
+
+        }
+
+  .btna
+  {
+    float: right;
+    margin-right: 20px;
+
+  }
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-box {  
+margin-left: 1090px;
+width: 500px;
+}  
+.formbtn{
+margin-top: 10px;
+margin-left: 175px;
+}
+
+.searchbutton{
+  margin-left: 330px;
+  margin-bottom: 10px;
+}
+.search-bar
+{
+padding: 50px;
+margin: 50px;
+
+}
