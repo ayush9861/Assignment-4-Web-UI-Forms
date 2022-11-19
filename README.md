@@ -22,19 +22,19 @@ I have tried to create a UI to conduct all the CURD operations Like Add, Edit, D
 ## Screenshots:
 
 ### GET
-![](https://i.imgur.com/JAbhdyf.png)
+![](https://i.imgur.com/MTpYd9H.png)
 
 ### ADD
-![](https://i.imgur.com/r3Nqngc.png)
+![](https://i.imgur.com/kWpuA9p.png)
 
 ### UPDATE
-![](https://i.imgur.com/jZvYD1p.png)
+![](https://i.imgur.com/L7jHed7.png)
 
 AFTER UPDATE
-![](https://i.imgur.com/7SDIydX.png)
+![](https://i.imgur.com/CCkAzh3.png)
 
 ### DELETE
-![](https://i.imgur.com/TUlivL2.png)
+![](https://i.imgur.com/l0VAsms.png)
 
 ### FIND
-![](https://i.imgur.com/l0JcMs1.png)
+![](https://i.imgur.com/iOk7GkA.png)
