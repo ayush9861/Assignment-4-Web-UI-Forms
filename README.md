@@ -30,7 +30,7 @@ I have tried to create a UI to conduct all the CURD operations Like Add, Edit, D
 ### UPDATE
 ![](https://i.imgur.com/L7jHed7.png)
 
-AFTER UPDATE
+### AFTER UPDATE
 ![](https://i.imgur.com/CCkAzh3.png)
 
 ### DELETE
