@@ -22,11 +22,7 @@ function display1() {
     document.querySelector(".background").style.display="block";
 
 }
-// function editsubdisplay() {
-//     document.getElementById("").style.display="block";
-//     document.querySelector(".background").style.display="block";
-//
-// }
+
 function subdisplay(){
     document.getElementById("subdiv").style.display="block";
     document.querySelector(".background").style.display="block";
@@ -49,7 +45,7 @@ function subhideupdate()
 
 
       let request = new XMLHttpRequest();
-    request.open("GET", "http://localhost:8080/api/courses/");
+    request.open("GET", "http://localhost:8080/api/server/");
     request.send();
     request.onload = function() {
       console.log(request);
@@ -63,12 +59,12 @@ function Insertdata(data){
 var getTable = document.getElementById("body");
 for(i = 0; i <= data.length; i++ ){
 var row =  `<tr>
-            <td id= "tdid1">${data[i].coursesId}</td>
-            <td>${data[i].coursesName}</td>
-            <td>${data[i].coursesCode}</td>
-            <td>${data[i].coursesDuration}</td>
-            <td><button class="edit"   data-id="${data[i].coursesId}" onclick="display1()"  type="button">Edit Data</button></td>
-            <td><button class="delete" data-id="${data[i].coursesId}" onclick="deletec()" type="button">Delete Data</button></td>            
+            <td id= "tdid1">${data[i].id}</td>
+            <td>${data[i].name}</td>
+            <td>${data[i].language}</td>
+            <td>${data[i].framework}</td>
+            <td><button class="edit"   data-id="${data[i].id}" onclick="display1()"  type="button">Edit Data</button></td>
+            <td><button class="delete" data-id="${data[i].id}" onclick="deletec()" type="button">Delete Data</button></td>            
           </tr>`
 
 getTable.innerHTML += row;
@@ -105,14 +101,14 @@ getTable.innerHTML += row;
 /////////////
 function update2(a){
     $.ajax({
-      url: "http://localhost:8080/api/courses/" + a,
+      url: "http://localhost:8080/api/server/" + a,
       type: "GET",
       dataType: "json",
       success: function (data) {
-        $("#id1").val(data.coursesId),
-          $("#first1").val(data.coursesName),
-          $("#second1").val(data.coursesCode),
-          $("#third1").val(data.coursesDuration);
+        $("#id1").val(data.id),
+          $("#first1").val(data.name),
+          $("#second1").val(data.language),
+          $("#third1").val(data.framework);
       },
       error: function (data) {
         getdata(data);
@@ -138,7 +134,7 @@ $(document).ready()
 
     function getdata(k) {
         let request1 = new XMLHttpRequest();
-        request1.open("GET", "http://localhost:8080/api/subjects/subjects/bycourseid/"+ k);
+        request1.open("GET", "http://localhost:8080/api/subjects/subjects/"+ k);
         request1.send();
         request1.onload = function() {
             console.log(request1);
@@ -206,7 +202,7 @@ function loadmysub() {
 }
 function deletesubdata(id){
     $.ajax({
-        url:'http://localhost:8080/api/subjects/delete/' + id,
+        url:'http://localhost:8080/api/server/' + id,
         type: 'DELETE',
         dataType:'json',
         success : function(data ){
@@ -228,10 +224,10 @@ function deletesubdata(id){
         $("#update1").on("click", function (e) {
             let data1 =
                 {
-                    coursesId: $("#id1").val(),
-                    coursesName: $("#first1").val(),
-                    coursesCode: $("#second1").val(),
-                    coursesDuration: $("#third1").val()
+                    id: $("#id1").val(),
+                    name: $("#first1").val(),
+                    language: $("#second1").val(),
+                    framework: $("#third1").val()
                 }
             updatedata($("#id1").val(), data1);
         });
@@ -241,7 +237,7 @@ function deletesubdata(id){
     function updatedata(id,data){
         console.log($("#id1").val(), data);
         $.ajax({
-          url: "http://localhost:8080/api/courses/update/" + id,
+          url: "http://localhost:8080/api/server/update/" + id,
           headers: {
             "Content-Type": "application/json",
           },
@@ -269,7 +265,7 @@ function deletesubdata(id){
     function deletemycourse(k)
     {
         $.ajax({
-          url: "http://localhost:8080/api/courses/" + k,
+          url: "http://localhost:8080/api/server/" + k,
           type: "DELETE",
           dataType: "json",
           success: function (data) {
@@ -281,35 +277,13 @@ function deletesubdata(id){
         });
     }
 
-///////
 $(document).ready()
 {
-//     function updatedata(id,data){
-//             $.ajax({
-//                 url:'http://localhost:8080/update/' + id,
-//                 headers: {
-//                     'Content-Type':'application/json'
-//                 },
-//                 type: 'PUT',
-//                 dataType:'json',
-//                 data:JSON.stringify(data),
-//                 success:function (data){
-//              window.location.reload()
-//                 },
-//                 error:function(){
-//                     console.log("Error");
-//                 }
-//             });
-//
-// }}
-
-
-////////////////
 
 
     function deletedata(id) {
         $.ajax({
-          url: "http://localhost:8080/api/courses/" + id,
+          url: "http://localhost:8080/api/delete/" + id,
           type: "DELETE",
           dataType: "json",
           success: function (data) {
@@ -331,7 +305,6 @@ $(document).ready()
 
     }
 
-    ////////Add Subjects
 
     function addsubjects() {
         var id = $('#subfirst').val();
@@ -353,7 +326,6 @@ $(document).ready()
 
     }
 
-    //////////////////////////////////
 
 
 function fun() {
@@ -434,45 +406,3 @@ function fun() {
     }
 
 }
-
-
-///////////
-/////
-// $(".edit").onclick(function () {
-//     var i = this.id;
-//     console.log(i);
-//     let data = {
-//         coursesName: $("#first").val(),
-//         coursesCode: $("#second").val(),
-//         coursesDuration: $("#third").val()
-//     }
-// })
-
-///////////
-
-//
-// $(".edit").onclick(function (){
-//     console.log($(this).attr('id'));
-//
-// })
-// var k =   $(this).attr('id');
-
-    // console.log(k);
-    // $.ajax({
-    //     url:'http://localhost:8080/' + k,
-    //     headers: {
-    //         'Content-Type':'application/json'
-    //     },
-    //     type: 'PUT',
-    //     dataType:'json',
-    //     data:JSON.stringify(data),
-    //     success:function (data){
-    //         console.log(k);
-    //         },
-    //     error:function(){
-    //         console.log(k);
-    //     }
-    // });
-
-
-//
