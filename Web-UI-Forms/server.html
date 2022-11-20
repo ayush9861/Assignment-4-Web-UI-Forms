@@ -30,12 +30,12 @@
     </div>
 
   <label for="first">Name:</label><br>
-  <input id="first" type="text" name="coursesName" /><br>
+  <input id="first" type="text" name="Name" /><br>
   <label for="second">Language:</label><br>
-  <input id="second" type="text" name="coursesCode" /><br>
+  <input id="second" type="text" name="Language" /><br>
   <label for="third">Framework:</label><br>
-  <input id="third" type="text" name="coursesDuration" /><br>
-      <button id="submit" class="formbtn" onclick="addcourse()">Submit</button>
+  <input id="third" type="text" name="Framework" /><br>
+      <button id="submit" class="formbtn" onclick="addserver()">Submit</button>
     </div>
     </div>
 
@@ -46,13 +46,13 @@
         </button>
       </div>
 
-        <input id="id1" type="hidden" name="courseid" /><br>
+        <input id="id1" type="hidden" name="id" /><br>
       <label for="first1">Name:</label><br>
-      <input id="first1" type="text" name="coursesName" /><br>
+      <input id="first1" type="text" name="Name" /><br>
       <label for="second1">Language:</label><br>
-      <input id="second1" type="text" name="coursesCode" /><br>
+      <input id="second1" type="text" name="Language" /><br>
       <label for="third1">framework:</label><br>
-      <input id="third1" type="text" name="coursesDuration" /><br>
+      <input id="third1" type="text" name="Framework" /><br>
 
         <button id="update1" onclick="editdata1()" class="formbtn">Update</button>
     </div>
@@ -81,7 +81,7 @@
   </script>
 
 <script>
-  function addcourse(){
+  function addserver(){
     var name = $('#first').val();
     console.log(name);
     var language = $('#second').val();
@@ -181,48 +181,6 @@ getTable.innerHTML += row;
 
       ////
 </script>
-</div>
-<div id="subjectdiv" style="display: none">
-<div>
-  <table class="table table-striped">
-    <tr  class="bg-info">
-      <th>Subject Id</th>
-      <th>Subject Name</th>
-      <th>Subject Code</th>
-      <th>Edit Data</th>
-      <th>Delete Data</th>
-
-    </tr>
-    <tbody id="body1">
-
-    </tbody>
-  </table>
-  <button style="float: right; margin-right: 20px;" onclick="subdisplay()">Add Data</button>
-  <button style="float: right; margin-right: 20px;" onclick="mainmenu()">Main Menu</button>
-    <!-- ////////////////////////// -->
-    <div class="modal" id="subdiv2">
-      <div class="formdiv" >
-        <div class="closebtn">
-          <button id="sbclosebtn" class="closebtn" onclick="subhideupdate()" ><i class="fas fa-window-close fa-2x"></i>
-          </button>
-        </div>
-        <input id="subsecondupdateid" type="hidden" name="subjectId" /><br>
-        <label for="subsecondupdatename">Subject Name:</label><br>
-        <input id="subsecondupdatename" type="text" name="subjectName" /><br>
-        <label for="subthirdupdatecode">Subject Code:</label><br>
-        <input id="subthirdupdatecode" type="text" name="subjectCode" /><br>
-        <center><br>
-          <br>
-          <button id="subsubmitupdate" onclick="subjectsupdate()" >Submit</button>
-        </center>
-      </div>
-    </div>
-        <script>
-
-        </script>
-
-</div>
-
 </div>
   </div>
 </div>

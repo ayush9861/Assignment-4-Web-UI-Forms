@@ -132,63 +132,6 @@ $(document).ready()
 
 /////////////////////////////
 
-    function getdata(k) {
-        let request1 = new XMLHttpRequest();
-        request1.open("GET", "http://localhost:8080/api/subjects/subjects/"+ k);
-        request1.send();
-        request1.onload = function() {
-            console.log(request1);
-            if (request1.status == 200) {
-                var a = JSON.parse(request1.response);
-                console.log(a);
-
-//////////Creating another Function
-                Insertdata(a);
-                function Insertdata(data){
-                    $("#body1").empty();
-                    var getTable = document.getElementById("body1");
-                    for(i = 0; i <= data.length; i++ ){
-                        var row =  `<tr>
-            <td>${data[i].subjectId}</td>
-            <td>${data[i].subjectName}</td>
-            <td>${data[i].subjectCode}</td>
-            <td><button class="editmysub"   data-id="${data[i].subjectId}" onclick="fun()"  type="button">Edit Data</button></td>
-            <td><button class="subdelete" data-id="${data[i].subjectId}"  onclick="loadmysub()" type="button">Delete Data</button></td>
-          </tr>`
-////// New Ajax Request
-
-
-
-                        ///////////
-if (data.success){
-    $("#body1").load(" #body1");
-}
-                        getTable.innerHTML += row;
-                        showdiv();
-
-                    }
-
-
-                }
-
-
-
-            } else {
-                console.log(`error ${request.status} ${request.statusText}`);
-            }
-            ////////////////
-
-
-
-
-
-
-        };
-
-
-
-    }
-
 
 
 function loadmysub() {
@@ -257,12 +200,12 @@ function deletesubdata(id){
     function deletec()
     {
         $(".delete").click(function (e) {
-            deletemycourse($($(this)[0]).data("id"));
+            deletemyserver($($(this)[0]).data("id"));
             console.log($($(this)[0]).data("id"));
             e.preventDefault();
         })
     }
-    function deletemycourse(k)
+    function deletemyserver(k)
     {
         $.ajax({
           url: "http://localhost:8080/api/server/" + k,
@@ -301,105 +244,10 @@ $(document).ready()
 
     function showdiv() {
         $("#maindivone").hide();
-        $("#subjectdiv").show();
 
     }
 
 
-    function addsubjects() {
-        var id = $('#subfirst').val();
-        console.log(name);
-        var name = $('#subsecond').val();
-        var code = $('#subthird').val();
-        $.ajax({
-            url: "http://localhost:8080/api/subjects/add/?subjectCode=" + code + "&subjectName=" + name + "&sId=" + window.m,
-            type: 'POST',
-            success: function (data) {
-                getdata(window.m);
-                subhide();
-            },
-            error: function (data) {
-                getdata(window.m);
-                subhide();
-            }
-        });
-
-    }
-
-
-
-function fun() {
-
-    $(".editmysub").click(function (e) {
-        editmysub1($($(this)[0]).data("id"));
-        console.log($($(this)[0]).data("id"));
-        e.preventDefault();
-    })
-}
-
-    function editmysub1(b){
-        $.ajax({
-            url:'http://localhost:8080/api/subjects/list/' + b,
-            type: 'GET',
-            dataType:'json',
-            success : function(data){
-                console.log(data);
-                console.log($("#subsecondupdateid").val(data.subjectId)),
-                    console.log("Get Success"),
-                    console.log("Test:"+ $("#subsecondupdateid").val(data.subjectId)),
-                    $("#subsecondupdateid").val(data.subjectId),
-                    $("#subsecondupdatename").val(data.subjectName),
-                    $("#subthirdupdatecode").val(data.subjectCode),
-                    console.log(  $("#subthirdupdatecode").val(data.subjectCode),
-                    );
-
-                    // getdata(window.m);
-                console.log("Success")
-                subdisplayupdate();
-            },
-            error: function (data)
-            {
-                $("#subsecondupdateid").val(data.subjectId),
-                    $("#subsecondupdatename").val(data.subjectName),
-                    $("#subthirdupdatecode").val(data.subjectCode),                console.log("Error");
-            }})};
-
-        function subjectsupdate() {
-            $("#subsubmitupdate").on("click", function (e) {
-                let subupdate =
-                    {
-                        subjectId: $("#subsecondupdateid").val(),
-                        subjectName: $("#subsecondupdatename").val(),
-                        subjectCode: $("#subthirdupdatecode").val(),
-                    }
-                updatesub($("#subsecondupdateid").val());
-                console.log("Test:" + $("#subsecondupdatename").val());
-
-
-            });
-        }
-
-    function updatesub(i){
-
-    var code = $("#subthirdupdatecode").val();
-    var name = $("#subsecondupdatename").val();
-
-        $.ajax({
-            url:'http://localhost:8080/api/subjects/update?subjectCode='+code+'&subjectName='+name+'&subjectId='+i+'&coursesId='+window.m,
-            type: 'POST',
-            success:function (data){
-          getdata(window.m);
-          subhideupdate();
-            },
-            error:function(){
-                getdata(window.m);
-                subhideupdate();
-
-
-            }
-        });
-
-    }
     function mainmenu()
     {
         window.location.reload();
